@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class CamSwitcher : MonoBehaviour
 {
-    [SerializeField] private GameObject firstPersonCharacter;
-    [SerializeField] private GameObject thirdPersonCharacter;
+    [SerializeField] private GameObject firstPersonController;
+    [SerializeField] private GameObject thirdPersonController;
+    [SerializeField] private GameObject thirdPersonCam;
 
     private bool isFirstPerson;
+    //private Transform currentTransform;
+    //private Rotation currentRotation;
 
     void Start()
     {
@@ -16,26 +19,30 @@ public class CamSwitcher : MonoBehaviour
 
     void Update()
     {
-        SwitchCam();
-    }
-
-    private void SwitchCam()
-    {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if (isFirstPerson)
-            {
-                firstPersonCharacter.SetActive(false);
-                thirdPersonCharacter.SetActive(true);
-                isFirstPerson = false;
-            }
+            StartCoroutine(SwitchCam());
+        }
+    }
 
-            else if (!isFirstPerson)
-            {
-                thirdPersonCharacter.SetActive(false);
-                firstPersonCharacter.SetActive(true);
-                isFirstPerson = true;
-            }
+    private IEnumerator SwitchCam()
+    {
+        yield return new WaitForSeconds(0.001f);
+
+        if (isFirstPerson)
+        {
+            firstPersonController.SetActive(false);
+            thirdPersonController.SetActive(true);
+            thirdPersonCam.SetActive(true);
+            isFirstPerson = false;
+        }
+
+        else if (!isFirstPerson)
+        {
+            thirdPersonCam.SetActive(false);
+            thirdPersonController.SetActive(false);
+            firstPersonController.SetActive(true);
+            isFirstPerson = true;
         }
     }
 }
