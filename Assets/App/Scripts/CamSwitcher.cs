@@ -7,10 +7,12 @@ public class CamSwitcher : MonoBehaviour
     [SerializeField] private GameObject firstPersonController;
     [SerializeField] private GameObject thirdPersonController;
     [SerializeField] private GameObject thirdPersonCam;
+    [SerializeField] private Transform firstPersonTransform;
+    [SerializeField] private Transform thirdPersonTransform;
 
     private bool isFirstPerson;
-    //private Transform currentTransform;
-    //private Rotation currentRotation;
+    private Vector3 currentPosition;
+    private Quaternion currentRotation;
 
     void Start()
     {
@@ -31,17 +33,30 @@ public class CamSwitcher : MonoBehaviour
 
         if (isFirstPerson)
         {
+            currentPosition = firstPersonTransform.position;
+            currentRotation = firstPersonTransform.rotation;
             firstPersonController.SetActive(false);
+
             thirdPersonController.SetActive(true);
+            thirdPersonTransform.position = currentPosition;
+            thirdPersonTransform.rotation = currentRotation;
+
             thirdPersonCam.SetActive(true);
+
             isFirstPerson = false;
         }
 
         else if (!isFirstPerson)
         {
+            currentPosition = thirdPersonTransform.position;
+            currentRotation = thirdPersonTransform.rotation;
             thirdPersonCam.SetActive(false);
             thirdPersonController.SetActive(false);
+
             firstPersonController.SetActive(true);
+            firstPersonTransform.position = currentPosition;
+            firstPersonTransform.rotation = currentRotation;
+
             isFirstPerson = true;
         }
     }
