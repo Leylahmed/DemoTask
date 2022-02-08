@@ -23,14 +23,12 @@ public class CamSwitcher : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            StartCoroutine(SwitchCam());
+            Switch();
         }
     }
 
-    private IEnumerator SwitchCam()
+    private void Switch()
     {
-        yield return new WaitForSeconds(0.001f);
-
         if (isFirstPerson)
         {
             currentPosition = firstPersonTransform.position;
