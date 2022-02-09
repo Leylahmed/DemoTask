@@ -7,8 +7,6 @@ public class CamSwitcher : MonoBehaviour
     [SerializeField] private GameObject firstPersonController;
     [SerializeField] private GameObject thirdPersonController;
     [SerializeField] private GameObject thirdPersonCam;
-    [SerializeField] private Transform firstPersonTransform;
-    [SerializeField] private Transform thirdPersonTransform;
 
     private bool isFirstPerson;
     private Vector3 currentPosition;
@@ -31,31 +29,36 @@ public class CamSwitcher : MonoBehaviour
     {
         if (isFirstPerson)
         {
-            currentPosition = firstPersonTransform.position;
-            currentRotation = firstPersonTransform.rotation;
+            currentPosition = firstPersonController.transform.position;
+            currentRotation = firstPersonController.transform.rotation;
             firstPersonController.SetActive(false);
 
             thirdPersonController.SetActive(true);
-            thirdPersonTransform.position = currentPosition;
-            thirdPersonTransform.rotation = currentRotation;
-
+            thirdPersonController.transform.position = currentPosition;
+            thirdPersonController.transform.rotation = currentRotation;
             thirdPersonCam.SetActive(true);
+            thirdPersonCam.transform.rotation = currentRotation;
+
 
             isFirstPerson = false;
+            currentPosition = new Vector3(0,0,0);
+            currentRotation = Quaternion.Euler(0,0,0);
         }
 
         else if (!isFirstPerson)
         {
-            currentPosition = thirdPersonTransform.position;
-            currentRotation = thirdPersonTransform.rotation;
+            currentPosition = thirdPersonController.transform.position;
+            currentRotation = thirdPersonController.transform.rotation;
             thirdPersonCam.SetActive(false);
             thirdPersonController.SetActive(false);
 
             firstPersonController.SetActive(true);
-            firstPersonTransform.position = currentPosition;
-            firstPersonTransform.rotation = currentRotation;
+            firstPersonController.transform.position = currentPosition + new Vector3(0, 0.01f, 0);
+            firstPersonController.transform.rotation = currentRotation;
 
             isFirstPerson = true;
+            currentPosition = new Vector3(0, 0, 0);
+            currentRotation = Quaternion.Euler(0, 0, 0);
         }
     }
 }
