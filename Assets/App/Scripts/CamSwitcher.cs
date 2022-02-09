@@ -36,13 +36,12 @@ public class CamSwitcher : MonoBehaviour
             thirdPersonController.SetActive(true);
             thirdPersonController.transform.position = currentPosition;
             thirdPersonController.transform.rotation = currentRotation;
-            thirdPersonCam.SetActive(true);
-            thirdPersonCam.transform.rotation = currentRotation;
 
+            thirdPersonCam.SetActive(true);
+            //thirdPersonCam.transform.position = new Vector3(thirdPersonController.transform.position.x, thirdPersonController.transform.position.y, thirdPersonController.transform.position.z - 3.5f);
+            //thirdPersonCam.transform.rotation = currentRotation;
 
             isFirstPerson = false;
-            currentPosition = new Vector3(0,0,0);
-            currentRotation = Quaternion.Euler(0,0,0);
         }
 
         else if (!isFirstPerson)
@@ -57,8 +56,6 @@ public class CamSwitcher : MonoBehaviour
             firstPersonController.transform.rotation = currentRotation;
 
             isFirstPerson = true;
-            currentPosition = new Vector3(0, 0, 0);
-            currentRotation = Quaternion.Euler(0, 0, 0);
         }
     }
 }
